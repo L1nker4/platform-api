@@ -24,8 +24,11 @@ import java.util.Date;
 @ToString
 public class User extends BaseEntity {
 
-    @Column(columnDefinition = "VARCHAR(255) COMMENT '用户昵称'")
-    private String nickname;
+    @Column(columnDefinition = "VARCHAR(255) COMMENT '用户名'")
+    private String username;
+
+    @Column(columnDefinition = "VARCHAR(50) COMMENT '学号'")
+    private String studentNumber;
 
     @Column(columnDefinition = "VARCHAR(10) COMMENT '性别'")
     private String sex;
@@ -39,13 +42,19 @@ public class User extends BaseEntity {
     @Column(columnDefinition = "text COMMENT '头像'")
     private String avatar;
 
+    @Column(columnDefinition = "VARCHAR(50) COMMENT '学院部门'")
+    private String department;
+
+    @Column(columnDefinition = "VARCHAR(50) COMMENT '班级'")
+    private String classname;
+
     @Column(columnDefinition = "VARCHAR(50) COMMENT 'openid' ")
     private String openid;
 
     @Column(columnDefinition = "VARCHAR(50) COMMENT 'sessionKey' ")
     private String sessionKey;
 
-    @Column(columnDefinition = "VARCHAR(50) COMMENT 'unionid' ")
+    @Column(columnDefinition = "VARCHAR(50) COMMENT 'unionid'")
     private String unionid;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

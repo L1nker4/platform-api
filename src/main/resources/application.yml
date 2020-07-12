@@ -18,10 +18,10 @@ spring:
     open-in-view: true
     database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
   redis:
-    host: 47.93.37.255
-    port: 6380
-    password: zerol1nker4
-    database: 1
+    host: localhost
+    port: 6379
+    password:
+    database: 12
     jedis:
       pool:
         min-idle: 8

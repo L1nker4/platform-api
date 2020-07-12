@@ -10,4 +10,11 @@ import wang.l1n.api.entity.User;
  * @description：
  */
 public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    User findByUsername(String username);
 }

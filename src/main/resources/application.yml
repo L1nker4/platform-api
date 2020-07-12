@@ -1,0 +1,31 @@
+server:
+  port: 9091
+  servlet:
+    context-path: /api
+spring:
+  datasource:
+    url: jdbc:mysql://47.93.37.255:3306/platform?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: zerol1nker4
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    open-in-view: true
+    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
+  redis:
+    host: 47.93.37.255
+    port: 6380
+    password: zerol1nker4
+    database: 1
+    jedis:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: -1
+    timeout: 1

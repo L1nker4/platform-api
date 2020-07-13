@@ -1,5 +1,6 @@
 package wang.l1n.api.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import wang.l1n.api.entity.User;
 import wang.l1n.api.entity.common.CommonResult;
 import wang.l1n.api.entity.common.ConstantVariable;
 import wang.l1n.api.entity.request.LoginUserRequest;
+import wang.l1n.api.entity.request.RegisterUserRequest;
 import wang.l1n.api.entity.response.LoginResponse;
 import wang.l1n.api.exception.ForestException;
 import wang.l1n.api.service.IUserService;
@@ -28,6 +30,7 @@ import java.time.LocalDateTime;
  */
 
 @Service
+@Slf4j
 public class UserServiceImpl implements IUserService {
 
     public static final String ERROR_MESSAGE = "用户名或密码错误";
@@ -39,7 +42,7 @@ public class UserServiceImpl implements IUserService {
     private CacheUtil cacheUtil;
 
     @Override
-    public CommonResult login(LoginUserRequest request) throws Exception {
+    public CommonResult login(LoginUserRequest request) {
         String username = request.getUsername();
         String password = MD5Util.encrypt(username, request.getPassword());
         User user = userRepository.findByUsername(username);
@@ -49,15 +52,24 @@ public class UserServiceImpl implements IUserService {
         if (!StringUtils.equals(user.getPassword(), password)) {
             throw new ForestException(ERROR_MESSAGE);
         }
-
         String token = ForestUtil.encryptToken(JWTUtil.sign(username, password));
         LocalDateTime expireTime = LocalDateTime.now().plusDays(1);
         String expStr = DateUtil.formatFullTime(expireTime);
         JWTToken jwtToken = new JWTToken(token, expStr);
-        cacheUtil.setex(ConstantVariable.USER_CACHE_PREFIX + username, jwtToken.getToken(), 3600 * 24L);
+        try {
+            cacheUtil.setex(ConstantVariable.USER_CACHE_PREFIX + username, jwtToken.getToken(), 3600 * 24L);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
         LoginResponse response = new LoginResponse();
         BeanUtils.copyProperties(user, response);
         response.setToken(token);
         return new CommonResult().success(response);
+    }
+
+    @Override
+    public CommonResult registerUser(RegisterUserRequest request) {
+        //TODO : 注册功能
+        return new CommonResult().success("yes");
     }
 }

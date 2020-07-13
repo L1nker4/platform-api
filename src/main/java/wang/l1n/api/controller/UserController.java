@@ -26,10 +26,18 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    /**
+     * 登录
+     *
+     * @param request
+     * @param result
+     * @return
+     * @throws Exception
+     */
     @PostMapping("login")
-    public CommonResult login(@RequestBody @Valid LoginUserRequest request, BindingResult result) throws Exception {
-        if (result.hasErrors()){
-            for (ObjectError error : result.getAllErrors()){
+    public CommonResult login(@RequestBody @Valid LoginUserRequest request, BindingResult result) {
+        if (result.hasErrors()) {
+            for (ObjectError error : result.getAllErrors()) {
                 return new CommonResult().failed(error.getDefaultMessage());
             }
         }
@@ -37,13 +45,24 @@ public class UserController {
     }
 
     @GetMapping("test")
-    public String test(){
+    public String test() {
         return "hello";
     }
 
-    @PostMapping
-    public void registerUser(RegisterUserRequest request, BindingResult bindingResult){
-
+    /**
+     * TODO: 注册
+     *
+     * @param request
+     * @param result
+     */
+    @PostMapping("register")
+    public CommonResult registerUser(@RequestBody @Valid RegisterUserRequest request, BindingResult result) {
+        if (result.hasErrors()){
+            for (ObjectError error : result.getAllErrors()){
+                return new CommonResult().failed(error.getDefaultMessage());
+            }
+        }
+        return userService.registerUser(request);
     }
 
 }

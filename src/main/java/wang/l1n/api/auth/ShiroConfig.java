@@ -38,6 +38,8 @@ public class ShiroConfig {
         factoryBean.setUnauthorizedUrl("/unauthorized/无权限");
         Map<String, String> filterRuleMap = new HashMap<>();
         filterRuleMap.put("/user/login", "anon");
+        filterRuleMap.put("/user/register", "anon");
+        filterRuleMap.put("/wx/**", "anon");
         // 所有请求通过我们自己的Token Filter
         filterRuleMap.put("/**", "token");
         // 访问 /unauthorized/** 不通过Token Filter

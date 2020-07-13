@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wang.l1n.api.utils.ForestUtil;
 
@@ -23,6 +24,7 @@ import java.io.PrintWriter;
  */
 
 @Slf4j
+@Component
 public class TokenFilter extends BasicHttpAuthenticationFilter {
 
     private static final String TOKEN = "Authentication";
